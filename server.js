@@ -18,6 +18,8 @@ app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout") // not at views root
 
+app.use(express.static('public'));
+
 /* ***********************
  * Routes
  *************************/
