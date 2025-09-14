@@ -1,9 +1,14 @@
-<nav aria-label="Primary">
+<nav aria-label="Primary" class="container">
   <ul class="topnav">
-    <li><a class="active" href="/">Home</a></li>
-    <li><a href="#">Custom</a></li>
-    <li><a href="#">Sedan</a></li>
-    <li><a href="#">SUV</a></li>
-    <li><a href="#">Truck</a></li>
+    <li><a href="/" class="<%= (typeof navActive !== 'undefined' && navActive==='home') ? 'active' : '' %>"
+           <%= (typeof navActive !== 'undefined' && navActive==='home') ? 'aria-current="page"' : '' %>>Home</a></li>
+    <li><a href="/custom" class="<%= navActive==='custom' ? 'active' : '' %>"
+           <%= navActive==='custom' ? 'aria-current="page"' : '' %>>Custom</a></li>
+    <li><a href="/sedan"  class="<%= navActive==='sedan' ? 'active' : '' %>"
+           <%= navActive==='sedan' ? 'aria-current="page"' : '' %>>Sedan</a></li>
+    <li><a href="/suv"    class="<%= navActive==='suv' ? 'active' : '' %>"
+           <%= navActive==='suv' ? 'aria-current="page"' : '' %>>SUV</a></li>
+    <li><a href="/truck"  class="<%= navActive==='truck' ? 'active' : '' %>"
+           <%= navActive==='truck' ? 'aria-current="page"' : '' %>>Truck</a></li>
   </ul>
 </nav>
