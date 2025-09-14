@@ -27,8 +27,8 @@ app.use(static)
 
 // Index Route
 app.get("/", function(req, res) {
-  res.render("index", { title: "Home" })
-})
+  res.render("index", { title: "Home", navActive: "home" });
+});
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
