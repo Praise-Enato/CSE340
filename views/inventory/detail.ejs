@@ -1,7 +1,2 @@
-<% layout('../layouts/layout') %>
-
-<% if (typeof title !== 'undefined') { %>
-  <h1><%= title %></h1>
-<% } %>
-
+<h1><%= (typeof title !== 'undefined' && title) ? title : 'Vehicle Details' %></h1>
 <%- detail %>
