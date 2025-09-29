@@ -27,6 +27,25 @@ Util.getNav = async function (req, res, next) {
 module.exports = Util
 
 
+/* ************************
+ * Constructs a classification select element
+ ************************** */
+Util.buildClassificationList = async function (classification_id = null) {
+  const data = await invModel.getClassifications()
+  let list = '<select name="classification_id" id="classificationList" required>'
+  list += "<option value=''>Choose a Classification</option>"
+  data.rows.forEach((row) => {
+    list += `<option value="${row.classification_id}"${
+      classification_id && Number(classification_id) === row.classification_id
+        ? " selected"
+        : ""
+    }>${row.classification_name}</option>`
+  })
+  list += "</select>"
+  return list
+}
+
+
 /* **************************************
 * Build the classification view HTML
 * ************************************ */
@@ -105,4 +124,3 @@ Util.buildVehicleDetail = function(vehicle) {
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
-

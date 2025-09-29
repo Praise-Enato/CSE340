@@ -1,0 +1,9 @@
+<section class="inventory-management">
+  <h1><%= typeof title !== 'undefined' ? title : 'Inventory Management' %></h1>
+  <%- messages() %>
+
+  <nav class="inventory-actions" aria-label="Inventory management actions">
+    <a class="btn btn-primary" href="/inv/add-classification">Add New Classification</a>
+    <a class="btn btn-secondary" href="/inv/add-inventory">Add New Vehicle</a>
+  </nav>
+</section>

@@ -1,0 +1,29 @@
+<section class="inventory-form">
+  <h1><%= typeof title !== 'undefined' ? title : 'Add Classification' %></h1>
+  <%- messages() %>
+
+  <% if (errors) { %>
+    <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+    </ul>
+  <% } %>
+
+  <form class="auth-form" action="/inv/add-classification" method="post">
+    <div class="form-field">
+      <label for="classification_name">Classification Name</label>
+      <div class="form-note">No spaces or special characters, letters and numbers only.</div>
+      <input
+        type="text"
+        id="classification_name"
+        name="classification_name"
+        required
+        pattern="^[A-Za-z0-9]+$"
+        value="<%= locals.classification_name || '' %>"
+      >
+    </div>
+
+    <button class="btn btn-primary" type="submit">Add Classification</button>
+  </form>
+</section>

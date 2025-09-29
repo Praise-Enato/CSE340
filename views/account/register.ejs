@@ -1,0 +1,101 @@
+<section class="auth auth-register">
+  <h1><%= typeof title !== 'undefined' ? title : 'Register' %></h1>
+  <%- messages() %>
+
+  <% if (errors) { %>
+    <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+    </ul>
+  <% } %>
+
+  <form class="auth-form" action="/account/register" method="post">
+    <div class="form-row">
+      <div class="form-field">
+        <label for="account_firstname">First name</label>
+        <input
+          type="text"
+          id="account_firstname"
+          name="account_firstname"
+          autocomplete="given-name"
+          placeholder="Jane"
+          value="<%= locals.account_firstname || '' %>"
+          required
+        >
+      </div>
+
+      <div class="form-field">
+        <label for="account_lastname">Last name</label>
+        <input
+          type="text"
+          id="account_lastname"
+          name="account_lastname"
+          autocomplete="family-name"
+          placeholder="Doe"
+          value="<%= locals.account_lastname || '' %>"
+          required
+        >
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="account_email">Email address</label>
+        <input
+          type="email"
+          id="account_email"
+          name="account_email"
+          autocomplete="email"
+          placeholder="you@example.com"
+        value="<%= locals.account_email || '' %>"
+        required
+      >
+    </div>
+
+    <div class="form-field">
+      <label for="account_password">Password</label>
+      <div id="password-help" class="form-note">
+        Passwords must be at least 12 characters and include 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.
+      </div>
+      <input
+        type="password"
+        id="account_password"
+        name="account_password"
+        autocomplete="new-password"
+        placeholder="Create a password"
+        minlength="12"
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+        title="12+ characters with uppercase, lowercase, number, and special character"
+        value="<%= typeof account_password !== 'undefined' ? account_password : '' %>"
+        aria-describedby="password-help"
+        required
+      >
+      <button type="button" class="toggle-password" data-target="account_password" aria-controls="account_password" aria-pressed="false">
+        Show password
+      </button>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Create Account</button>
+  </form>
+
+  <p class="auth-link">
+    Already have an account?
+    <a href="/account/login">Log in</a>.
+  </p>
+</section>
+
+<script>
+  (function(){
+    const toggle = document.querySelector('.toggle-password');
+    if (!toggle) return;
+    const target = document.getElementById(toggle.dataset.target);
+    if (!target) return;
+    toggle.addEventListener('click', () => {
+      const isHidden = target.type === 'password';
+      target.type = isHidden ? 'text' : 'password';
+      toggle.textContent = isHidden ? 'Hide password' : 'Show password';
+      toggle.setAttribute('aria-pressed', isHidden ? 'true' : 'false');
+    });
+  })();
+</script>
+
