@@ -1,0 +1,14 @@
+<section class="account-management">
+  <h1><%= typeof title !== 'undefined' ? title : 'Account Management' %></h1>
+  <%- messages() %>
+
+  <% if (errors) { %>
+    <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+    </ul>
+  <% } %>
+
+  <p>You're logged in.</p>
+</section>

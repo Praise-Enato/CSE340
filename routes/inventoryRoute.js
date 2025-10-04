@@ -11,6 +11,11 @@ router.get(
   utilities.handleErrors(invController.buildManagementView)
 );
 
+router.get(
+  "/getInventory/:classification_id",
+  utilities.handleErrors(invController.getInventoryJSON)
+);
+
 // Add classification view
 router.get(
   "/add-classification",

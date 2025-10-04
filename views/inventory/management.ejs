@@ -6,4 +6,16 @@
     <a class="btn btn-primary" href="/inv/add-classification">Add New Classification</a>
     <a class="btn btn-secondary" href="/inv/add-inventory">Add New Vehicle</a>
   </nav>
+
+  <h2>Manage Inventory</h2>
+  <p>Select a classification to see available inventory.</p>
+
+  <% if (typeof classificationList !== 'undefined') { %>
+    <%= classificationList %>
+  <% } %>
+
+  <table id="inventoryDisplay"></table>
+  <noscript>JavaScript must be enabled to use this page.</noscript>
 </section>
+
+<script src="../../js/inventory.js"></script>

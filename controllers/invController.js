@@ -8,9 +8,11 @@ const invCont = {}
  * ************************** */
 invCont.buildManagementView = async function (req, res, next) {
   const nav = await utilities.getNav()
+  const classificationList = await utilities.buildClassificationList()
   res.render("./inventory/management", {
     title: "Inventory Management",
     nav,
+    classificationList,
     errors: null,
   })
 }
@@ -133,6 +135,18 @@ invCont.createInventory = async function (req, res) {
     errors: null,
     ...req.body,
   })
+}
+
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+invCont.getInventoryJSON = async (req, res, next) => {
+  const classification_id = parseInt(req.params.classification_id, 10)
+  const invData = await invModel.getInventoryByClassificationId(classification_id)
+  if (invData && invData[0] && invData[0].inv_id) {
+    return res.json(invData)
+  }
+  next(new Error("No data returned"))
 }
 
 module.exports = invCont
