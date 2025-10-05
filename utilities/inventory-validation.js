@@ -95,6 +95,8 @@ invValidate.inventoryRules = () => {
   ]
 }
 
+invValidate.newInventoryRules = invValidate.inventoryRules
+
 /* ******************************
  *  Check inventory data
  * ***************************** */
@@ -109,6 +111,34 @@ invValidate.checkInventoryData = async (req, res, next) => {
       classificationList,
       errors,
       ...req.body,
+    })
+  }
+  next()
+}
+
+/* ******************************
+ *  Check update inventory data (edit view)
+ * ***************************** */
+invValidate.checkUpdateData = async (req, res, next) => {
+  const errors = validationResult(req)
+  const {
+    inv_id,
+    classification_id,
+    inv_make,
+    inv_model,
+  } = req.body
+
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav()
+    const classificationSelect = await utilities.buildClassificationList(classification_id)
+    const itemName = `${inv_make || ""} ${inv_model || ""}`.trim()
+    return res.render("./inventory/edit-inventory", {
+      title: itemName ? `Edit ${itemName}` : "Edit Vehicle",
+      nav,
+      classificationSelect,
+      errors,
+      ...req.body,
+      inv_id,
     })
   }
   next()
