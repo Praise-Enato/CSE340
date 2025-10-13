@@ -1,2 +1,38 @@
-<h1><%= (typeof title !== 'undefined' && title) ? title : 'Vehicle Details' %></h1>
-<%- detail %>
+<section class="vehicle-detail-page">
+  <h1><%= (typeof title !== 'undefined' && title) ? title : 'Vehicle Details' %></h1>
+  <%- messages() %>
+
+  <% if (errors && errors.array) { %>
+    <ul class="notice">
+      <% errors.array().forEach(function (error) { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <%- detail %>
+
+  <% if (vehicle && locals.loggedin) { %>
+    <section class="wishlist-actions">
+      <% if (!isSaved) { %>
+        <form class="wishlist-form" data-wishlist-form action="/wishlist/add" method="post" novalidate>
+          <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
+          <input type="hidden" name="redirectTo" value="detail">
+          <p class="form-error" data-error hidden role="alert"></p>
+          <button type="submit" class="btn btn-primary">Add to Wishlist</button>
+        </form>
+      <% } else { %>
+        <form class="wishlist-form" data-wishlist-form action="/wishlist/remove" method="post" novalidate>
+          <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
+          <input type="hidden" name="redirectTo" value="detail">
+          <p class="form-error" data-error hidden role="alert"></p>
+          <button type="submit" class="btn btn-secondary">Remove from Wishlist</button>
+        </form>
+      <% } %>
+    </section>
+  <% } else if (vehicle && !locals.loggedin) { %>
+    <p class="wishlist-login-prompt">
+      <a href="/account/login">Log in</a> to save this vehicle to your wishlist.
+    </p>
+  <% } %>
+</section>

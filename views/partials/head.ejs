@@ -8,4 +8,9 @@
 
   <!-- External stylesheet must use media='screen' as required -->
   <link rel="stylesheet" href="/css/styles.css" media="screen">
+  <% if (locals.pageScripts && Array.isArray(locals.pageScripts) && locals.pageScripts.length) { %>
+    <% locals.pageScripts.forEach(function (scriptPath) { %>
+      <script src="<%= scriptPath %>" defer></script>
+    <% }) %>
+  <% } %>
 </head>

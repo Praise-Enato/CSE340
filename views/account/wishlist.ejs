@@ -1,0 +1,54 @@
+<section class="wishlist-dashboard">
+  <h1><%= typeof title !== 'undefined' ? title : 'My Wishlist' %></h1>
+  <%- messages() %>
+
+  <% if (errors && errors.array) { %>
+    <ul class="notice">
+      <% errors.array().forEach(function (error) { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <% if (wishlistItems && wishlistItems.length) { %>
+    <ul class="wishlist-list">
+      <% wishlistItems.forEach(function (item) { %>
+        <li class="wishlist-card">
+          <div class="wishlist-media">
+            <a href="/inv/detail/<%= item.inv_id %>">
+              <img src="<%= item.inv_thumbnail %>" alt="Image of <%= item.inv_make %> <%= item.inv_model %>">
+            </a>
+          </div>
+          <div class="wishlist-info">
+            <h2>
+              <a href="/inv/detail/<%= item.inv_id %>">
+                <%= item.inv_year %> <%= item.inv_make %> <%= item.inv_model %>
+              </a>
+            </h2>
+            <p class="wishlist-meta">
+              <strong>Category:</strong> <%= item.classification_name %><br>
+              <strong>Price:</strong> $<%= new Intl.NumberFormat('en-US').format(item.inv_price) %>
+            </p>
+            <p class="wishlist-added">
+              Saved on <time datetime="<%= item.created_at.toISOString() %>">
+                <%= new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(item.created_at) %>
+              </time>
+            </p>
+
+            <div class="wishlist-actions">
+              <a class="btn btn-primary" href="/inv/detail/<%= item.inv_id %>">View Details</a>
+              <form class="wishlist-form" data-wishlist-form action="/wishlist/remove" method="post" novalidate>
+                <input type="hidden" name="inv_id" value="<%= item.inv_id %>">
+                <input type="hidden" name="redirectTo" value="wishlist">
+                <p class="form-error" data-error hidden role="alert"></p>
+                <button type="submit" class="btn btn-secondary">Remove</button>
+              </form>
+            </div>
+          </div>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p class="notice">You have not saved any vehicles yet. Visit the <a href="/inv/">inventory</a> to add some favorites.</p>
+  <% } %>
+</section>

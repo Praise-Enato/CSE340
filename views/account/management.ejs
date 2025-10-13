@@ -17,6 +17,10 @@
       <a href="/account/update/<%= locals.accountData.account_id %>" class="btn-link">Update account information</a>
     </p>
 
+    <p>
+      <a href="/wishlist/" class="btn-link">View my wishlist</a>
+    </p>
+
     <% if (["Employee", "Admin"].includes(locals.accountData.account_type)) { %>
       <h3>Inventory Management</h3>
       <p><a href="/inv/" class="btn-link">Manage Inventory</a></p>

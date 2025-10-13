@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const wishlistModel = require("../models/wishlist-model")
 const utilities = require("../utilities")
 
 const invCont = {}
@@ -70,7 +71,23 @@ invCont.buildByInvId = async function (req, res, next) {
   const pageTitle = vehicle
     ? `${vehicle.inv_make} ${vehicle.inv_model} Details`
     : "Vehicle Not Found"
-  res.render("./inventory/detail", { title: pageTitle, nav, detail })
+
+  let isSaved = false
+  if (vehicle && res.locals.loggedin && res.locals.accountData) {
+    const accountId = Number(res.locals.accountData.account_id)
+    const existing = await wishlistModel.findWishlistEntry(accountId, vehicle.inv_id)
+    isSaved = Boolean(existing)
+  }
+
+  res.render("./inventory/detail", {
+    title: pageTitle,
+    nav,
+    detail,
+    vehicle,
+    errors: null,
+    isSaved,
+    pageScripts: ["/js/wishlist.js"],
+  })
 }
 
 /* ***************************

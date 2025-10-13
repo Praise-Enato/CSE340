@@ -11,6 +11,7 @@ const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const errorRoute = require("./routes/errorRoute")
 const accountRoute = require("./routes/accountRoute") // unit 4 deliver login activity
+const wishlistRoute = require("./routes/wishlistRoute")
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -55,6 +56,7 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/inv", inventoryRoute)     // /inv/type/:classificationId + /inv/detail/:invId
 app.use("/test", errorRoute)        // /test/error-test → intentional 500
 app.use("/account", accountRoute) // unit 4 deliver login activity
+app.use("/wishlist", wishlistRoute)
 
 // 404 (must be last non-error middleware)
 app.use(async (req, res, next) => {
