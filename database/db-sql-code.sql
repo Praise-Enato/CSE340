@@ -6,7 +6,7 @@ CREATE TYPE public.account_type AS ENUM
     ('Client', 'Employee', 'Admin');
 
 ALTER TYPE public.account_type
-    OWNER TO cse340pr;
+    OWNER TO cse340pr2;
 
 
 -- Table structure for table 'classification'
@@ -274,3 +274,16 @@ UPDATE public.inventory
 SET
   inv_image     = REPLACE(inv_image,     '/images/', '/images/vehicles/'),
   inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
+
+-- Account role adjustments and verification
+UPDATE public.account
+SET account_type = 'Employee'
+WHERE account_email = 'happy@340.edu';
+
+UPDATE public.account
+SET account_type = 'Admin'
+WHERE account_email = 'manager@340.edu';
+
+SELECT account_email, account_type
+FROM public.account
+WHERE account_email IN ('happy@340.edu', 'manager@340.edu');
