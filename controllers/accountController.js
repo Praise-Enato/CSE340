@@ -50,24 +50,29 @@ async function registerAccount(req, res) {
     account_password,
   } = req.body
 
-  const regResult = await accountModel.registerAccount(
-    account_firstname,
-    account_lastname,
-    account_email,
-    account_password
-  )
-
-  if (regResult && regResult.rowCount) {
-    req.flash(
-      "notice",
-      `Congratulations, you're registered ${account_firstname}. Please log in.`
-    )
-    return res.status(201).render("account/login", {
-      title: "Login",
-      nav,
-      errors: null,
+  try {
+    const hashedPassword = await bcrypt.hash(account_password, 10)
+    const regResult = await accountModel.registerAccount(
+      account_firstname,
+      account_lastname,
       account_email,
-    })
+      hashedPassword
+    )
+
+    if (regResult && regResult.rowCount) {
+      req.flash(
+        "notice",
+        `Congratulations, you're registered ${account_firstname}. Please log in.`
+      )
+      return res.status(201).render("account/login", {
+        title: "Login",
+        nav,
+        errors: null,
+        account_email,
+      })
+    }
+  } catch (error) {
+    console.error("registerAccount error:", error)
   }
 
   req.flash("notice", "Sorry, the registration failed.")
